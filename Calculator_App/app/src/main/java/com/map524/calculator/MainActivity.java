@@ -3,6 +3,7 @@ package com.map524.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,16 +22,28 @@ public class MainActivity extends AppCompatActivity {
         TextView display_view = (TextView) findViewById(R.id.display);
 
         String clickedValue = button.getText().toString();
+        Log.d(null,clickedValue);
+        if (clickedValue.equals("=")) {
 
-        if (clickedValue == "=") {
-            calculator.push(display_view.getText().toString());
-            calculator.calculate();
+            Log.d(null,"checking if =");
+            if (calculator.getNumberOperands().get(calculator.getNumberOperands().size()).equals("+")
+            || calculator.getNumberOperands().get(calculator.getNumberOperands().size()).equals("-")
+            || calculator.getNumberOperands().get(calculator.getNumberOperands().size()).equals("*")
+            || calculator.getNumberOperands().get(calculator.getNumberOperands().size()).equals("/")) {
+            //create a alert dialog due to error (cannot end with operand)
+
+                Log.d(null,"cannot perform operation");
+            } else {
+                Log.d(null,"before calculation is performed");
+                //perform calculation
+                int result;
+                result = calculator.calculate();
+            }
+
         } else {
+            Log.d(null,"calculator push");
+            calculator.push(clickedValue);
             display_view.setText(display_view.getText().toString()+clickedValue);
         }
-    }
-
-    public int calculate() {
-        return calculator.calculate();
     }
 }
