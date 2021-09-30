@@ -6,8 +6,8 @@ import android.util.Log;
     import java.util.List;
 
 public class Calculator {
-
     private List <String> numbers_operands = new ArrayList<String>();
+    private Boolean historyMode = false;
     void push(String value) {
         numbers_operands.add(value);
    }
@@ -15,8 +15,6 @@ public class Calculator {
    int calculate() {
         int result = Integer.parseInt(numbers_operands.get(0));
         numbers_operands.remove(0);
-        //Log.d(null, String.valueOf(numbers_operands.isEmpty()));
-        //int count = 0;
        for (String i: numbers_operands) {
            Log.d(null, i);
        }
@@ -43,17 +41,27 @@ public class Calculator {
                 numbers_operands.remove(0);
                 numbers_operands.remove(0);
             }
-            //Log.d(null, String.valueOf(result));
         }
         return result;
    }
 
-   List <String> getNumberOperands() {
-        return numbers_operands;
-   }
-   void show_numbers_operands() {
-        numbers_operands.forEach(value->System.out.println(value));
+   Boolean changeMode (){
+        if (historyMode){
+            historyMode=false;
+        } else {
+            historyMode = true;
+        }
+        Log.d(null,historyMode.toString());
+        return historyMode;
    }
 
+   Boolean getMode () {
+        return historyMode;
+   }
 
+   public void clear_clac() {
+        while (numbers_operands.size() > 0) {
+            numbers_operands.remove(0);
+        }
+   }
 }
