@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/CashRegisterApp/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/CashRegisterApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/CashRegisterApp/app/src/main/res/layout/activity_second.xml" value="0.20520833333333333" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/CashRegisterApp/app/src/main/res/layout/product_item.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>

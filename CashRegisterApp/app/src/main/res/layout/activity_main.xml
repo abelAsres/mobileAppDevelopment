@@ -1,83 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="182dp">
 
-        <TextView
-            android:id="@+id/total"
-            android:layout_column="0"
-            android:text="Total" />
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="253dp"
+        android:layout_height="66dp"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/totalPrice"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <TextView
-            android:id="@+id/product"
-            android:layout_column="1"
-            android:text="Product" />
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="114dp"
+        android:layout_height="82dp"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    </TableRow>
-
-    <TableRow
+    <GridLayout
+        android:id="@+id/gridLayoutButtons"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <GridLayout
-            android:columnCount="4"
-            android:rowCount="4"
-            android:useDefaultMargins="true">
-            <Button
-                android:text="1">
-            </Button>
-            <Button android:text="2">
-            </Button>
-            <Button
-                android:text="3">
-            </Button>
-            <Button
-                android:id="@+id/buy"
-                android:text="BUY"
-                android:layout_rowWeight="4"
-                android:layout_rowSpan="4">
-            </Button>
-            <Button
-                android:text="4">
-            </Button>
-            <Button
-                android:text="5">
-            </Button>
-            <Button
-                android:text="6">
-            </Button>
-            <Button
-                android:text="7">
-            </Button>
-            <Button
-                android:text="8">
-            </Button>
-            <Button
-                android:text="9">
-            </Button>
-            <Button
-                android:text="C">
-            </Button>
-            <Button
-                android:text="0">
-            </Button>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:columnCount="4"
+        android:rowCount="4"
+        android:useDefaultMargins="true"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/productName">
 
+        <Button android:text="1"
+            android:onClick="number_button_clicked"></Button>
 
-        </GridLayout>
-    </TableRow>
-    <TableRow
+        <Button android:text="2"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="3"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_rowSpan="4"
+            android:layout_rowWeight="4"
+            android:text="BUY"
+            android:onClick="buy_button"></Button>
+
+        <Button android:text="4"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="5"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="6"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="7"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="8"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="9"
+            android:onClick="number_button_clicked"></Button>
+
+        <Button android:text="C"
+            android:onClick="clear_button"></Button>
+
+        <Button android:text="0"
+            android:onClick="number_button_clicked"></Button>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/quantityPruchase"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ListView
-            android:layout_width="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayoutButtons"></TextView>
 
-        </ListView>
-    </TableRow>
+    <ListView
+        android:id="@+id/productList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.017">
 
-</TableLayout>
+    </ListView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96836984" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="7dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.53214777" />
+</androidx.constraintlayout.widget.ConstraintLayout>
