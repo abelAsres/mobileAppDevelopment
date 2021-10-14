@@ -2,8 +2,8 @@ package com.map524.product;
 
 public class Product {
     String name;
-    int price;
-    int quantity;
+    float price;
+    float quantity;
 
     public Product() {
         this.name= "This is a test obj";
@@ -11,7 +11,7 @@ public class Product {
         this.quantity=0;
     }
 
-    public Product(String name, int price, int quantity) {
+    public Product(String name, float price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -25,7 +25,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -33,11 +33,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 

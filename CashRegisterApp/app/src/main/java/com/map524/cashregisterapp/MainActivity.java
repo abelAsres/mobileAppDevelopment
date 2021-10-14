@@ -15,15 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    Calculator calculator;
-
-
-    Product productList[];
+    ProductAdapter productAdapter;
+    ArrayList<Product> productList;
     Product selectedProduct;
-
     ListView products;
+
+    Calculator calculator;
 
     TextView quantitySelected;
     TextView productSelected;
@@ -48,62 +49,100 @@ public class MainActivity extends AppCompatActivity {
         purchaseTotal.setText("Total");
         selectedProduct=new Product();
 
+        calculator = new Calculator();
+
         //populate listview with products available
+
+        productList = new ArrayList<Product>();
+        productList.add(new Product("this is product "+1,1,1));
+        productList.add(new Product("this is product "+2,2,2));
+        productList.add(new Product("this is product "+3,3,3));
+        productList.add(new Product("this is product "+4,4,4));
+
+        for(Product product : productList){
+            Log.d("Product: ", product.getName());
+        }
+
+        productAdapter = new ProductAdapter(this,productList);
         products = (ListView) findViewById(R.id.productList);
-        productList = new Product[]{new Product(),new Product(),new Product()};
-        ArrayAdapter<Product> adapter =
+        products.setAdapter(productAdapter);
+
+        products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedProduct=productList.get(i);
+                Log.d("Product Name",selectedProduct.getName());
+                productSelected.setText(selectedProduct.getName());
+            }
+        });
+     /*   ArrayAdapter<Product> adapter =
                 new ArrayAdapter<>(this,R.layout.product_item,R.id.product_text,productList);
         products.setAdapter(adapter);
 
         products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedProduct=productList[i];
+                selectedProduct=productList.get(i);
                 Log.d("Product Name",selectedProduct.getName());
             }
-        });
+        });*/
     }
 
     public void number_button_clicked (View view) {
         numberButton = (Button) view;
-        if (quantitySelected.getText().equals("Quantity")){
-            quantitySelected.setText("");
-        }
         String clickedValue = numberButton.getText().toString();
-        quantitySelected.setText(quantitySelected.getText() + clickedValue);
+        float quantity;
+        //set quantity to be purchased
+        if(quantitySelected.getText().equals("Quantity")){
+            quantitySelected.setText(clickedValue);
+            quantity = Float.parseFloat(clickedValue);
+        }else{
+            quantitySelected.setText(quantitySelected.getText() + clickedValue);
+            quantity =  Float.parseFloat(quantitySelected.getText().toString());
+        }
+
+        //save number clicked on pad and display, if out of stock display warning
+        if(selectedProduct.getQuantity() < quantity){
+            Snackbar.make(findViewById(R.id.buy), "Sorry not enough in stock...", Snackbar.LENGTH_LONG).show();
+            quantitySelected.setText(quantitySelected.getText().toString().substring(0,quantitySelected.getText().toString().length() - 1));
+        }else{
+            getTotal();
+        }
     }
 
     public void clear_button(View view) {
-        quantitySelected.setText("Quantity");;
+        quantitySelected.setText("Quantity");
         productSelected.setText("Product");
         purchaseTotal.setText("Total");
         selectedProduct=null;
     }
 
     public void buy_button(View view) {
+
         //check if product has been selected
-        if(selectedProduct.getName().equals("This is a test obj") || productSelected.getText().toString().equals("Product")){
-            Log.d("check product selection fail","product not selected");
-            buyButton = findViewById(R.id.buy);
-            Snackbar.make(findViewById(R.id.buy), "Please select a product...", Snackbar.LENGTH_LONG).show();
+        if( productSelected.getText().toString().equals("Product") || selectedProduct.getName().equals("This is a test obj")){
+            Snackbar.make(findViewById(view.getId()), "Please select a product...", Snackbar.LENGTH_LONG).show();
         }
         //check is quantity to be purchased has been set
         else if (quantitySelected.getText().toString().equals("Quantity") || Integer.parseInt(quantitySelected.getText().toString()) == 0){
-            Log.d("check quantity selection fail","quantity not selected");
-            buyButton = findViewById(R.id.buy);
-            Snackbar.make(findViewById(R.id.buy), "Please enter an amount to purchase...", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(view.getId()), "Please enter an amount to purchase...", Snackbar.LENGTH_LONG).show();
         }
         //if no errors change purchase item quantity and message user and reset cash register
         else {
-            buyButton = findViewById(R.id.buy);
-            selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantitySelected.getText().toString()));
-            Snackbar.make(buyButton, "thanks for the purchase", Snackbar.LENGTH_LONG).show();
+            selectedProduct.setQuantity(selectedProduct.getQuantity() - Float.parseFloat(quantitySelected.getText().toString()));
+            Snackbar.make(findViewById(view.getId()), "thanks for the purchase", Snackbar.LENGTH_LONG).show();
             clear_button(clearButton);
         }
     }
 
     public void getTotal () {
-        calculator.getTotal(Float.parseFloat(quantitySelected.getText().toString()),selectedProduct.getPrice());
+        //calculate the total price based on current quantity selection and display
+        Float totalPrice = calculator.getTotal(Float.parseFloat(quantitySelected.getText().toString()),
+                selectedProduct.getPrice());
+        Log.d("totalPrice: ",totalPrice.toString());
+        Log.d("selectedQuantity: ",quantitySelected.getText().toString());
+        Log.d("productPrice: ",Float.toString(selectedProduct.getPrice()));
+        purchaseTotal.setText(totalPrice.toString());
     }
 /*
     //Need to create intent
