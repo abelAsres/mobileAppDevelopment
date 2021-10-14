@@ -1,4 +1,5 @@
 package com.map524.cashregisterapp;
+import com.google.android.material.snackbar.Snackbar;
 import com.map524.Calculator.Calculator;
 import com.map524.product.Product;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     Calculator calculator;
+
 
     Product productList[];
     Product selectedProduct;
@@ -36,13 +39,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // intialize test views
-        quantitySelected = (TextView) findViewById(R.id.totalPrice);
+        quantitySelected = (TextView) findViewById(R.id.quantityPruchase);
         productSelected = (TextView) findViewById(R.id.productName);
-        purchaseTotal = (TextView) findViewById(R.id.quantityPruchase);
+        purchaseTotal = (TextView) findViewById(R.id.totalPrice);
 
-        quantitySelected.setText("Total");;
+        quantitySelected.setText("Quantity");;
         productSelected.setText("Product");
-        purchaseTotal.setText("Quantity");
+        purchaseTotal.setText("Total");
+        selectedProduct=new Product();
 
         //populate listview with products available
         products = (ListView) findViewById(R.id.productList);
@@ -62,28 +66,40 @@ public class MainActivity extends AppCompatActivity {
 
     public void number_button_clicked (View view) {
         numberButton = (Button) view;
+        if (quantitySelected.getText().equals("Quantity")){
+            quantitySelected.setText("");
+        }
         String clickedValue = numberButton.getText().toString();
-        //
+        quantitySelected.setText(quantitySelected.getText() + clickedValue);
     }
 
     public void clear_button(View view) {
         quantitySelected.setText("Quantity");;
         productSelected.setText("Product");
-        purchaseTotal.setText("0.00");
+        purchaseTotal.setText("Total");
         selectedProduct=null;
     }
 
     public void buy_button(View view) {
-        //check the quantity
-        //adjust quantity if there is enough and message user about purchase
-        if (selectedProduct.inStock(Integer.parseInt(quantitySelected.getText().toString()))) {
+        //check if product has been selected
+        if(selectedProduct.getName().equals("This is a test obj") || productSelected.getText().toString().equals("Product")){
+            Log.d("check product selection fail","product not selected");
+            buyButton = findViewById(R.id.buy);
+            Snackbar.make(findViewById(R.id.buy), "Please select a product...", Snackbar.LENGTH_LONG).show();
+        }
+        //check is quantity to be purchased has been set
+        else if (quantitySelected.getText().toString().equals("Quantity") || Integer.parseInt(quantitySelected.getText().toString()) == 0){
+            Log.d("check quantity selection fail","quantity not selected");
+            buyButton = findViewById(R.id.buy);
+            Snackbar.make(findViewById(R.id.buy), "Please enter an amount to purchase...", Snackbar.LENGTH_LONG).show();
+        }
+        //if no errors change purchase item quantity and message user and reset cash register
+        else {
+            buyButton = findViewById(R.id.buy);
             selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantitySelected.getText().toString()));
-            //message the user regarding the purchase and clear sale from register
+            Snackbar.make(buyButton, "thanks for the purchase", Snackbar.LENGTH_LONG).show();
             clear_button(clearButton);
         }
-        //display warning if not enough
-
-        selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantitySelected.getText().toString()));
     }
 
     public void getTotal () {

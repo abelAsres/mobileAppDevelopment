@@ -42,6 +42,6 @@ public class Product {
     }
 
     public Boolean inStock(int quantitySelected){
-        return this.getQuantity() > quantitySelected;
+        return this.getQuantity() >= quantitySelected;
     }
 }
