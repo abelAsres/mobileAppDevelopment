@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="253dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="296dp"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/totalPrice"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="114dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <GridLayout
+        android:id="@+id/gridLayoutButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:columnCount="4"
+        android:rowCount="4"
+        android:useDefaultMargins="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.989"
+        app:layout_constraintStart_toEndOf="@+id/productName"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="1"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="2"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="3"></Button>
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_rowSpan="4"
+            android:layout_rowWeight="4"
+            android:onClick="buy_button"
+            android:text="BUY"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="4"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="5"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="6"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="7"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="8"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="9"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="clear_button"
+            android:text="C"></Button>
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="number_button_clicked"
+            android:text="0"></Button>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/quantityPruchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/gridLayoutButtons"
+        app:layout_constraintStart_toEndOf="@+id/totalPrice"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <ListView
+        android:id="@+id/productList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.545">
+
+    </ListView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="208dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
