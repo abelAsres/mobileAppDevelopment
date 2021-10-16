@@ -2,8 +2,13 @@ package com.map524.cashregisterapp;
 import com.google.android.material.snackbar.Snackbar;
 import com.map524.Calculator.Calculator;
 import com.map524.product.Product;
+import com.map524.purchases.Purchase;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     Product selectedProduct;
     ListView products;
 
+    ArrayList<Purchase>purchaseList;
+
     Calculator calculator;
 
     TextView quantitySelected;
@@ -29,12 +36,30 @@ public class MainActivity extends AppCompatActivity {
 
     Button numberButton;
     Button buyButton;
+    Button managerButton;
     Button clearButton;
+
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            Log.d("onSave", "obj is null");
+            //populate listview with products available
+            purchaseList = new ArrayList<>(1);
+            productList = new ArrayList<>();
+            productList.add(new Product("Pants",11.99,100));
+            productList.add(new Product("Shoes",25.99,200));
+            productList.add(new Product("Hats",5.99,15));
+            productList.add(new Product("Shirts",4.99,20));
+        }else {
+            Log.d("onSave","obj is not null");
+            productList = savedInstanceState.getParcelableArrayList("listOfProducts");
+            purchaseList = savedInstanceState.getParcelableArrayList("listOfPurchases");
+        }
 
         // initialize test views
         quantitySelected = findViewById(R.id.quantityPruchase);
@@ -48,13 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         calculator = new Calculator();
 
-        //populate listview with products available
-
-        productList = new ArrayList<>();
-        productList.add(new Product("this is product "+1,1,1));
-        productList.add(new Product("this is product "+2,2,2));
-        productList.add(new Product("this is product "+3,3,3));
-        productList.add(new Product("this is product "+4,4,4));
+        builder = new AlertDialog.Builder(this);
 
         for(Product product : productList){
             Log.d("Product: ", product.getName());
@@ -72,17 +91,21 @@ public class MainActivity extends AppCompatActivity {
                 productSelected.setText(selectedProduct.getName());
             }
         });
-     /*   ArrayAdapter<Product> adapter =
-                new ArrayAdapter<>(this,R.layout.product_item,R.id.product_text,productList);
-        products.setAdapter(adapter);
+    }
 
-        products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedProduct=productList.get(i);
-                Log.d("Product Name",selectedProduct.getName());
-            }
-        });*/
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("onSave","IN");
+        outState.putParcelableArrayList("listOfProducts", productList);
+        outState.putParcelableArrayList("listOfPurchases",purchaseList);
+    }
+
+    public void save_purchase (){
+        Log.d(null,"trying to save purchase");
+        purchaseList.add(new Purchase(selectedProduct.getName(),
+                Double.parseDouble(purchaseTotal.getText().toString()),
+                Integer.parseInt(quantitySelected.getText().toString())));
     }
 
     public void number_button_clicked (View view) {
@@ -114,18 +137,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void manager_button_clicked(View view) {
+        Intent intent = new Intent(this,Manager.class);
+        intent.putExtra("purchases",purchaseList);
+        startActivity(intent);
+    }
+
     public void backspace(){
         quantitySelected.setText(quantitySelected.getText().toString().substring(0,quantitySelected.getText().toString().length() - 1));
     }
 
-    public void clear_button(View view) {
+    public void clear_button_clicked(View view) {
         quantitySelected.setText(R.string.quantity_view);
         productSelected.setText(R.string.product_view);
         purchaseTotal.setText(R.string.total_view);
         selectedProduct=null;
     }
 
-    public void buy_button(View view) {
+    public void buy_button_clicked(View view) {
         //check if product has been selected
         if( productSelected.getText().toString().equals("Product") || selectedProduct.getName().equals("This is a test obj")){
             Snackbar.make(findViewById(view.getId()), "Please select a product...", Snackbar.LENGTH_LONG).show();
@@ -136,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //if no errors change purchase item quantity and message user and reset cash register
         else {
-            selectedProduct.setQuantity(selectedProduct.getQuantity() - Float.parseFloat(quantitySelected.getText().toString()));
+            selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantitySelected.getText().toString()));
 
             int indexOfProduct = productList.indexOf(selectedProduct);
 
@@ -144,19 +173,27 @@ public class MainActivity extends AppCompatActivity {
                 productList.get(indexOfProduct).setQuantity(selectedProduct.getQuantity());
                 productAdapter.notifyDataSetChanged();
             }
-            Snackbar.make(findViewById(view.getId()), "thanks for the purchase", Snackbar.LENGTH_LONG).show();
-            clear_button(clearButton);
+
+            Log.d("made Purchase","just about to create buidler");
+            builder.create();
+            builder.setTitle("Thank you for your purchase");
+            builder.setMessage("Your purchase is "+quantitySelected.getText().toString()+" for $"+ purchaseTotal.getText().toString());
+            builder.show();
+
+            save_purchase();
+            //Snackbar.make(findViewById(view.getId()), "thanks for the purchase", Snackbar.LENGTH_LONG).show();
+            clear_button_clicked(clearButton);
         }
     }
 
     public void getTotal () {
         //calculate the total price based on current quantity selection and display
-        Float totalPrice = calculator.getTotal(Float.parseFloat(quantitySelected.getText().toString()),
+        Double totalPrice = calculator.getTotal(Double.parseDouble(quantitySelected.getText().toString()),
                 selectedProduct.getPrice());
         Log.d("totalPrice: ",totalPrice.toString());
         Log.d("selectedQuantity: ",quantitySelected.getText().toString());
-        Log.d("productPrice: ",Float.toString(selectedProduct.getPrice()));
-        purchaseTotal.setText(totalPrice.toString());
+        Log.d("productPrice: ",Double.toString(selectedProduct.getPrice()));
+        purchaseTotal.setText(String.format("%,.2f",totalPrice));
     }
 /*
     //Need to create intent

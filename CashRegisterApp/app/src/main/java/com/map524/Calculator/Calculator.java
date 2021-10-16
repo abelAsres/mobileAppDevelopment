@@ -1,7 +1,7 @@
 package com.map524.Calculator;
 
 public class Calculator {
-    public float getTotal(float quantity, float price) {
+    public double getTotal(double quantity, double price) {
         return quantity * price;
     }
 }

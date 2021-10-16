@@ -52,7 +52,7 @@ public class ProductAdapter extends BaseAdapter {
 
         Log.d("productName",productList.get(position).getName());
         productName.setText(productList.get(position).getName());
-        productPrice.setText(Float.toString(productList.get(position).getPrice()));
+        productPrice.setText(Double.toString(productList.get(position).getPrice()));
         productQuantity.setText(Float.toString(productList.get(position).getQuantity()));
 
         return convertView;

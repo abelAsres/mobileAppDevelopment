@@ -9,41 +9,42 @@
 
     <TextView
         android:id="@+id/productName"
-        android:layout_width="253dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="296dp"
+        android:layout_width="350dp"
+        android:layout_height="59dp"
         android:textAlignment="center"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toStartOf="@+id/totalPrice"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="@dimen/display_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.208"></TextView>
 
     <TextView
         android:id="@+id/totalPrice"
-        android:layout_width="114dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="178dp"
+        android:layout_height="66dp"
         android:textAlignment="center"
-        android:textSize="50dp"
+        android:textSize="@dimen/display_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.869"></TextView>
 
     <GridLayout
         android:id="@+id/gridLayoutButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:columnCount="4"
         android:rowCount="4"
         android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.989"
         app:layout_constraintStart_toEndOf="@+id/productName"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/guideline8">
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -67,10 +68,11 @@
             android:id="@+id/buy"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:layout_rowSpan="4"
+            android:layout_rowSpan="2"
             android:layout_rowWeight="4"
-            android:onClick="buy_button"
+            android:onClick="buy_button_clicked"
             android:text="BUY"></Button>
+
 
         <Button
             android:layout_width="@dimen/button_width"
@@ -109,16 +111,30 @@
             android:text="9"></Button>
 
         <Button
+            android:id="@+id/manager"
+            android:text="manager"
+            android:textSize="@dimen/manager_button_text"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_rowSpan="2"
+            android:layout_rowWeight="4"
+            android:onClick="manager_button_clicked">
+
+        </Button>
+
+        <Button
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:onClick="clear_button"
             android:text="C"></Button>
+
 
         <Button
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:onClick="number_button_clicked"
             android:text="0"></Button>
+
     </GridLayout>
 
     <TextView
@@ -126,20 +142,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="50dp"
+        android:textSize="@dimen/display_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gridLayoutButtons"
+        app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toEndOf="@+id/totalPrice"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.775"></TextView>
 
     <ListView
         android:id="@+id/productList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="718dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.545">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.233">
 
     </ListView>
 
@@ -148,6 +167,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="208dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CashRegisterApp">
         <activity
-            android:name=".SecondActivity"
+            android:name=".SinglePurchase"
             android:exported="true" />
+        <activity
+            android:name=".History"
+            android:exported="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Manager" />
+        </activity>
+        <activity
+            android:name=".Manager"
+            android:exported="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
