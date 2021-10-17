@@ -2,7 +2,9 @@ package com.map524.purchases;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,13 +12,16 @@ public class Purchase implements Parcelable {
     String item;
     double purchaseTotal;
     int purchaseQuantity;
-    Date dateOfPurchase;
+    String dateOfPurchase;
 
     public Purchase(String item, double purchaseTotal, int purchaseQuantity) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
         this.item = item;
         this.purchaseTotal = purchaseTotal;
         this.purchaseQuantity = purchaseQuantity;
-        this.dateOfPurchase = new Date();
+        this.dateOfPurchase = formatter.format(new Date());
+        Log.d("purhcased on: ", this.dateOfPurchase);
     }
 
     protected Purchase(Parcel in) {
@@ -61,7 +66,7 @@ public class Purchase implements Parcelable {
         this.purchaseQuantity = purchaseQuantity;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return dateOfPurchase;
     }
 

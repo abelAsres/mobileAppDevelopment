@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.map524.purchases.Purchase;
@@ -12,7 +13,7 @@ public class SinglePurchase extends AppCompatActivity {
 
     Purchase purchase;
 
-    TextView puchaseItem;
+    TextView purchaseItem;
     TextView purchaseTotal;
     TextView purchaseDate;
 
@@ -24,13 +25,13 @@ public class SinglePurchase extends AppCompatActivity {
         Intent intent_from_history = getIntent();
         purchase = intent_from_history.getParcelableExtra("singlePurchase");
 
-        puchaseItem = findViewById(R.id.singlePurchaseItem);
+        purchaseItem = findViewById(R.id.singlePurchaseItem);
         purchaseTotal = findViewById(R.id.singlePurchaseTotal);
         purchaseDate = findViewById(R.id.singlePurchaseDate);
 
-        puchaseItem.setText(purchase.getItem());
+        purchaseItem.setText(purchase.getItem());
         purchaseTotal.setText((Double.toString(purchase.getPurchaseTotal())));
-        purchaseDate.setText(purchase.getDate().toString());
+        purchaseDate.setText(purchase.getDate());
 
     }
 }

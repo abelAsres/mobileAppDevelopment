@@ -120,12 +120,13 @@
 
     <ListView
         android:id="@+id/productList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="388dp"
+        android:layout_height="221dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.017">
+        app:layout_constraintVertical_bias="0.451">
 
     </ListView>
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,8 +32,10 @@ public class Manager extends AppCompatActivity {
     public void history_button_clicked (View view){
 
         Intent intent = new Intent(this,History.class);
-        intent.putExtra("purchases",purchaseList);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("purchases",purchaseList);
+        Log.d("clicked history button: ",purchaseList.size()+"");
+        intent.putExtra("bundle",bundle);
         startActivity(intent);
-
     }
 }
