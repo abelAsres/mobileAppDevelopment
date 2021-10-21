@@ -11,24 +11,27 @@
         android:theme="@style/Theme.CashRegisterApp">
         <activity
             android:name=".SinglePurchase"
-            android:exported="true" />
+            android:exported="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".History" />
+        </activity>
         <activity
             android:name=".History"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Manager" />
         </activity>
         <activity
             android:name=".Manager"
-            android:exported="true">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

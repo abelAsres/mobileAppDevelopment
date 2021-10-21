@@ -14,14 +14,12 @@ public class Purchase implements Parcelable {
     int purchaseQuantity;
     String dateOfPurchase;
 
-    public Purchase(String item, double purchaseTotal, int purchaseQuantity) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    public Purchase(String item, double purchaseTotal, int purchaseQuantity, String dateOfPurchase) {
 
         this.item = item;
         this.purchaseTotal = purchaseTotal;
         this.purchaseQuantity = purchaseQuantity;
-        this.dateOfPurchase = formatter.format(new Date());
-        Log.d("purhcased on: ", this.dateOfPurchase);
+        this.dateOfPurchase = dateOfPurchase;
     }
 
     protected Purchase(Parcel in) {
@@ -66,7 +64,7 @@ public class Purchase implements Parcelable {
         this.purchaseQuantity = purchaseQuantity;
     }
 
-    public String getDate() {
+    public String getDateOfPurchase() {
         return dateOfPurchase;
     }
 

@@ -1,5 +1,6 @@
 package com.map524.cashregisterapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,14 +24,32 @@ public class Manager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
 
+
+        Log.d("ManagerClass","onCreate");
         history_button = findViewById(R.id.history_button);
 
-        Intent intent_from_main = getIntent();
-        purchaseList = intent_from_main.getParcelableArrayListExtra("purchases");
+        if (savedInstanceState != null) {
+            Log.d("ManagerClass","retrieving save");
+            Log.d("ManagerClass","savedInstance found");
+            purchaseList = savedInstanceState.getParcelableArrayList("listOfPurchases");
+        }
+
+        if(getIntent().hasExtra("purchases")){
+            Log.d("ManagerClass","Got an INTENT");
+            Intent intent_from_main = getIntent();
+            purchaseList = intent_from_main.getParcelableArrayListExtra("purchases");
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d("ManagerClass","onSave");
+        outState.putParcelableArrayList("listOfPurchases",purchaseList);
+        super.onSaveInstanceState(outState);
     }
 
     public void history_button_clicked (View view){
-
         Intent intent = new Intent(this,History.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("purchases",purchaseList);

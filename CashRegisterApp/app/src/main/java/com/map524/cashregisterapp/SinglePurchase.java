@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.map524.purchases.Purchase;
 
+import java.text.SimpleDateFormat;
+
 public class SinglePurchase extends AppCompatActivity {
 
     Purchase purchase;
@@ -16,6 +18,7 @@ public class SinglePurchase extends AppCompatActivity {
     TextView purchaseItem;
     TextView purchaseTotal;
     TextView purchaseDate;
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy ");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +28,16 @@ public class SinglePurchase extends AppCompatActivity {
         Intent intent_from_history = getIntent();
         purchase = intent_from_history.getParcelableExtra("singlePurchase");
 
+
+
         purchaseItem = findViewById(R.id.singlePurchaseItem);
         purchaseTotal = findViewById(R.id.singlePurchaseTotal);
         purchaseDate = findViewById(R.id.singlePurchaseDate);
 
         purchaseItem.setText(purchase.getItem());
         purchaseTotal.setText((Double.toString(purchase.getPurchaseTotal())));
-        purchaseDate.setText(purchase.getDate());
+        //String date = formatter.format(purchase.getDate());
+        purchaseDate.setText(purchase.getDateOfPurchase());
 
     }
 }

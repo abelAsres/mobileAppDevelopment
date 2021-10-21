@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
     AlertDialog.Builder builder;
 
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy");//formating according to my need
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("MainActivityClass","onCreate");
         if (savedInstanceState == null) {
-            Log.d("onSave", "obj is null");
+            Log.d("savedInstanceState", "there was nothing saved");
             //populate listview with products available
             purchaseList = new ArrayList<>(1);
             productList = new ArrayList<>();
@@ -57,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
             productList.add(new Product("Hats",5.99,15));
             productList.add(new Product("Shirts",4.99,20));
         }else {
-            Log.d("onSave","obj is not null");
+            Log.d("savedInstanceState","recieved package");
             productList = savedInstanceState.getParcelableArrayList("listOfProducts");
             purchaseList = savedInstanceState.getParcelableArrayList("listOfPurchases");
         }
 
-        // initialize test views
+        // initialize
         quantitySelected = findViewById(R.id.quantityPruchase);
         productSelected = findViewById(R.id.productName);
         purchaseTotal = findViewById(R.id.totalPrice);
@@ -75,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         calculator = new Calculator();
 
         builder = new AlertDialog.Builder(this);
-
-        for(Product product : productList){
-            Log.d("Product: ", product.getName());
-        }
 
         productAdapter = new ProductAdapter(this,productList);
         products = findViewById(R.id.productList);
@@ -95,18 +96,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(null, "pausing main activity");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(null, "resuming main activity");
+        for (Product product : productList){
+            Log.d(product.getName(),Integer.toString(product.getQuantity()));
+        }
+        productAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(null, "starting main activity");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MainActivityClass", "destroying main activity");
+    }
+
+    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("onSave","IN");
+        Log.d("MainActivityClass","onSave");
         outState.putParcelableArrayList("listOfProducts", productList);
         outState.putParcelableArrayList("listOfPurchases",purchaseList);
+
+        super.onSaveInstanceState(outState);
+
+    }
+
+    // This callback is called only when there is a saved instance that is previously saved by using
+    // onSaveInstanceState(). We restore some state in onCreate(), while we can optionally restore
+    // other state here, possibly usable after onStart() has completed.
+    // The savedInstanceState Bundle is same as the one used in onCreate().
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+       Log.d("MainActivityClass","onRestore");
     }
 
     public void save_purchase (){
         Log.d(null,"trying to save purchase");
         purchaseList.add(new Purchase(selectedProduct.getName(),
                 Double.parseDouble(purchaseTotal.getText().toString()),
-                Integer.parseInt(quantitySelected.getText().toString())));
+                Integer.parseInt(quantitySelected.getText().toString()),
+                formatter.format(Calendar.getInstance().getTime())));
     }
 
     public void number_button_clicked (View view) {

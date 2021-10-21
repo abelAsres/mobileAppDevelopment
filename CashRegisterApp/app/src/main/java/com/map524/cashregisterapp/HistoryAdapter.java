@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
         this.historyItemListener = historyItemListener;
     }
 
-
-
+    //prepares each row
     public static class viewHolder extends RecyclerView.ViewHolder{
         private final TextView purchaseItem;
         private final TextView purchaseTotal;
@@ -78,6 +78,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
      * */
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.viewHolder holder, int position) {
+        Log.d("onBindViewHolder","PurchaseList size: "+ purchaseList.size());
+        Log.d("onBindViewHolder","item: "+ purchaseList.get(position).getItem());
         holder.getPurchaseItem().setText(purchaseList.get(position).getItem());
         holder.getPurchaseTotal().setText(Double.toString(purchaseList.get(position).getPurchaseTotal()));
         holder.getPurchaseQuantity().setText(Integer.toString(purchaseList.get(position).getPurchaseQuantity()));
