@@ -34,10 +34,16 @@ public class Manager extends AppCompatActivity {
             purchaseList = savedInstanceState.getParcelableArrayList("listOfPurchases");
         }
 
-        if(getIntent().hasExtra("purchases")){
+        if(getIntent().hasExtra("bundle")){
             Log.d("ManagerClass","Got an INTENT");
-            Intent intent_from_main = getIntent();
-            purchaseList = intent_from_main.getParcelableArrayListExtra("purchases");
+
+            Bundle bundleFromMainActivity = getIntent().getBundleExtra("bundle");
+            purchaseList = bundleFromMainActivity.getParcelableArrayList("purchases");
+            Log.d("purcashe",purchaseList.get(0).getItem());
+
+            Log.d("purcashe",Integer.toString(purchaseList.get(0).getPurchaseQuantity()));
+
+            //Log.d("purcashe",purchaseList.get(0).getDateOfPurchase());
         }
 
     }

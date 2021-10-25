@@ -38,13 +38,11 @@ public class MainActivity extends AppCompatActivity {
     TextView purchaseTotal;
 
     Button numberButton;
-    Button buyButton;
-    Button managerButton;
     Button clearButton;
 
     AlertDialog.Builder builder;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy");//formating according to my need
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd hh:mm:ss 'EDT' yyyy");//formating according to my need
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,10 +143,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void save_purchase (){
         Log.d(null,"trying to save purchase");
-        purchaseList.add(new Purchase(selectedProduct.getName(),
+        Purchase purchase = new Purchase(selectedProduct.getName(),
                 Double.parseDouble(purchaseTotal.getText().toString()),
                 Integer.parseInt(quantitySelected.getText().toString()),
-                formatter.format(Calendar.getInstance().getTime())));
+                formatter.format(Calendar.getInstance().getTime()));
+        purchaseList.add(purchase);
     }
 
     public void number_button_clicked (View view) {
@@ -181,8 +180,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void manager_button_clicked(View view) {
+        //Log.d("buy button purchase date",purchaseList.get(0).getDateOfPurchase());
         Intent intent = new Intent(this,Manager.class);
-        intent.putExtra("purchases",purchaseList);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("purchases",purchaseList);
+        Log.d("clicked history button: ",purchaseList.size()+"");
+        intent.putExtra("bundle",bundle);
         startActivity(intent);
     }
 

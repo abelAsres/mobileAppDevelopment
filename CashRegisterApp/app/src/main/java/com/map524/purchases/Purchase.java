@@ -26,6 +26,7 @@ public class Purchase implements Parcelable {
         item = in.readString();
         purchaseTotal = in.readDouble();
         purchaseQuantity = in.readInt();
+        dateOfPurchase= in.readString();
     }
 
     public static final Creator<Purchase> CREATOR = new Creator<Purchase>() {
@@ -60,9 +61,7 @@ public class Purchase implements Parcelable {
         return purchaseQuantity;
     }
 
-    public void setPurchaseQuantity(int purchaseQuantity) {
-        this.purchaseQuantity = purchaseQuantity;
-    }
+    public void setPurchaseQuantity(int purchaseQuantity) { this.purchaseQuantity = purchaseQuantity; }
 
     public String getDateOfPurchase() {
         return dateOfPurchase;
@@ -78,5 +77,6 @@ public class Purchase implements Parcelable {
         dest.writeString(item);
         dest.writeDouble(purchaseTotal);
         dest.writeInt(purchaseQuantity);
+        dest.writeString(dateOfPurchase);
     }
 }
