@@ -5,3 +5,5 @@ This repo is a collection of android mobile applications that I developed for th
 
 ## Projects
 1. Calculator App
+2. CashRegister App
+3. Quiz App
