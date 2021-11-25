@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/quiz_fragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/portFrameHeight"
+        android:layout_height="@dimen/landFrameHeight"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

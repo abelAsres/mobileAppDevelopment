@@ -4,4 +4,30 @@
     <string name="yes">True</string>
     <string name="no">False</string>
     <string name="startQuiz">Start Quiz</string>
+
+    <string-array name="questions">
+        <item>Toronto is the capital of Ontario?</item>
+        <item>Ottawa is the capital of Canada?</item>
+        <item>Vancouver is part of the USA?</item>
+        <item>Saskatchewan is the largest province?</item>
+        <item>Nova Scotia is by the Atlantic Ocean?</item>
+        <item>Ontario\'s GDP is over 750 million dollars?</item>
+        <item>Canada has the longest coastline in the world?</item>
+        <item>Prince Edward Island is the smallest province?</item>
+        <item>Mount Logan in Yukon is Canada’s tallest mountain?</item>
+        <item>Milton, Ontario is a township within the GTA?</item>
+    </string-array>
+
+    <string-array name="answers">
+        <item>True</item>
+        <item>True</item>
+        <item>False</item>
+        <item>False</item>
+        <item>True</item>
+        <item>True</item>
+        <item>True</item>
+        <item>True</item>
+        <item>True</item>
+        <item>True</item>
+    </string-array>
 </resources>
