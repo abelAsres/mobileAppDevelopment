@@ -4,6 +4,8 @@
     <string name="yes">True</string>
     <string name="no">False</string>
     <string name="startQuiz">Start Quiz</string>
+    <string name="getAverage">Get average of all scores</string>
+    <string name="resetFile">Reset storage file</string>
 
     <string-array name="questions">
         <item>Toronto is the capital of Ontario?</item>

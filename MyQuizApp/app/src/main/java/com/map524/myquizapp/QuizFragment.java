@@ -31,14 +31,16 @@ public class QuizFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_quiz,container,false);
         this.questionText = v.findViewById(R.id.quizText);
-        this.questionText.setBackgroundResource((int)Math.floor(Math.random()*(2131034155-2131034123+1)+2131034123));
+        Log.d("Random color", ""+R.color.Black);
+        this.questionText.setBackgroundResource((int)Math.floor(Math.random()*(R.color.Maroon-R.color.SteelBlue+1)+R.color.SteelBlue));
         this.questionText.setText(this.question);
         return v;
     }
 
     public void setQuestion(int number , String question) {
 
-        this.number = number;
         this.question = question;
+        this.number = number;
+
     }
 }

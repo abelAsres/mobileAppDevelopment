@@ -6,6 +6,9 @@
     <string name="no">خاطئة</string>
     <string name="startQuiz">ابدأ الاختبار</string>
 
+    <string name="getAverage">احصل على متوسط كل النتائج</string>
+    <string name="resetFile">إعادة تعيين ملف التخزين</string>
+
     <string-array name="questions">
         <item>تورونتو هي عاصمة أونتاريو؟</item>
         <item>أوتاوا هي عاصمة كندا؟</item>
