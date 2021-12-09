@@ -18,7 +18,6 @@ public class NetworkingService {
 
     private String apiKey = "&api_key=b6cc214404645f70e9a23fb883752578";
     private String genreUrl = "https://api.themoviedb.org/3/discover/movie?with_genres=";
-
     public static ExecutorService networkExecutorService = Executors.newFixedThreadPool(4);
     public static Handler networkingHandler = new android.os.Handler(Looper.getMainLooper());
 
@@ -29,7 +28,7 @@ public class NetworkingService {
 
     public NetworkingListener networkingListener;
     //look up genre of movies
-    public void getMovieByGenre(int genreId){
+    public void getMovieByGenre(int genreId, int genrePage){
     // TODO 1: need to fetch and return movies from genre to caller
         //create new runnable object to run in the background
         networkExecutorService.execute(new Runnable() {
@@ -38,7 +37,7 @@ public class NetworkingService {
                 HttpsURLConnection httpsURLConnection = null;
                 try {
                     //make http call here
-                    String urlString = genreUrl + genreId + apiKey;
+                    String urlString = genreUrl + genreId +"&page="+genrePage+ apiKey;
                     URL urlObj = new URL(urlString);
                     httpsURLConnection = (HttpsURLConnection) urlObj.openConnection();
                     httpsURLConnection.setRequestMethod("GET");
@@ -51,7 +50,7 @@ public class NetworkingService {
                     String jsonData ="";
 
                     while((inputStramData = reader.read()) != -1) {
-                        char current = (char) reader.read();
+                        char current = (char) inputStramData;
                         jsonData += current;
                     }
                     final String data = jsonData;
@@ -80,4 +79,5 @@ public class NetworkingService {
     public void searchByMovieByTitle(String movieTitle){
         // TODO 2: need to fetch and return movie to caller
     }
+
 }
