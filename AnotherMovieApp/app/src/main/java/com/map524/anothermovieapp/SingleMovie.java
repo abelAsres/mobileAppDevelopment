@@ -15,6 +15,7 @@ public class SingleMovie extends AppCompatActivity {
 
     Movie movie;
     TextView movieTitle;
+    TextView movieOverview;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,10 @@ public class SingleMovie extends AppCompatActivity {
         Bundle bundle = intentFromMovieListByGenre.getBundleExtra("bundle");
         movie = bundle.getParcelable("movie");
         imageView = findViewById(R.id.movie_image);
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500"+movie.getPoster_path()).into(imageView);
         movieTitle = findViewById(R.id.movie_title);
-
+        movieOverview = findViewById(R.id.movie_overview);
         movieTitle.setText(movie.getOriginal_title());
+        movieOverview.setText(movie.getOverview());
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500"+movie.getPoster_path()).into(imageView);
     }
 }

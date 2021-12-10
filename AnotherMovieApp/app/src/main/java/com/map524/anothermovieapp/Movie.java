@@ -4,28 +4,39 @@ package com.map524.anothermovieapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.lang.reflect.Array;
 
+@Entity
 public class Movie implements Parcelable {
-    String backdrop_path;
-    int [] genre_ids;
-    int id;
-    String original_title;
-    String overview;
-    String poster_path;
-    String release_date;
-    String title;
-    float vote_average;
-    int vote_count;
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
-    String imageUrl ="https://image.tmdb.org/t/p/w500";
+    public int movie_id;
+    public String backdrop_path;
 
-    public Movie(String backdrop_path, int[] genre_ids, int id, String original_title,
+    @Ignore
+    public int [] genre_ids;
+
+    public String original_title;
+    public String overview;
+    public String poster_path;
+    public String release_date;
+    public String title;
+    public float vote_average;
+    public int vote_count;
+
+    public String imageUrl ="https://image.tmdb.org/t/p/w500";
+
+    public Movie(String backdrop_path, int[] genre_ids, int movie_id, String original_title,
                  String overview, String poster_path, String release_date, String title,
                  float vote_average, int vote_count) {
         this.backdrop_path = imageUrl+ backdrop_path;
         this.genre_ids = genre_ids;
-        this.id = id;
+        this.movie_id = movie_id;
         this.original_title = original_title;
         this.overview = overview;
         this.poster_path = imageUrl + poster_path;
@@ -38,7 +49,7 @@ public class Movie implements Parcelable {
     protected Movie(Parcel in) {
         backdrop_path = in.readString();
         //in.readIntArray(genre_ids);
-        id = in.readInt();
+        movie_id = in.readInt();
         original_title = in.readString();
         overview = in.readString();
         poster_path = in.readString();
@@ -52,7 +63,7 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(backdrop_path);
         //dest.writeIntArray(genre_ids);
-        dest.writeInt(id);
+        dest.writeInt(movie_id);
         dest.writeString(original_title);
         dest.writeString(overview);
         dest.writeString(poster_path);
@@ -83,13 +94,9 @@ public class Movie implements Parcelable {
         return backdrop_path;
     }
 
-    public int[] getGenre_ids() {
-        return genre_ids;
-    }
+    public int[] getGenre_ids() { return genre_ids; }
 
-    public int getId() {
-        return id;
-    }
+    public int getMovieId() { return movie_id; }
 
     public String getOriginal_title() {
         return original_title;
