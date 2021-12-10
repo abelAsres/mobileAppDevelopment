@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_genres.xml" value="0.19114583333333332" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_movie_list_by_genre.xml" value="0.33" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_recyclerview_genres.xml" value="0.19114583333333332" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_recyclerview_movies.xml" value="0.35260416666666666" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_scrolling.xml" value="0.36666666666666664" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/activity_single_movie.xml" value="0.19114583333333332" />
+        <entry key="..\:/MAP524_Assignments/mobileAppDevelopment/AnotherMovieApp/app/src/main/res/layout/content_scrolling.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

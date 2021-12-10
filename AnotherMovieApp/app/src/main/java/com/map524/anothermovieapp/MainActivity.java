@@ -1,19 +1,30 @@
 package com.map524.anothermovieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NetworkingService.NetworkingListener {
+public class MainActivity extends AppCompatActivity implements NetworkingService.NetworkingListener,
+        GenresAdapter.genreClickListener{
 
     NetworkingService networkingManager;
     JsonService jsonService;
-    ArrayList<Movie> movies;
 
-    @Override
+    GenresAdapter genresAdapter;
+    RecyclerView genreRecyclerView;
+    ArrayList<Genre> genres;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -22,23 +33,33 @@ public class MainActivity extends AppCompatActivity implements NetworkingService
         jsonService = ((myApp) getApplication()).getJsonService();
         //listen for background thread to complete
         networkingManager.networkingListener= this;
-        getMoviesByGenre(28,2);
-        movies = new ArrayList<Movie>();
-    }
 
-    public void getMoviesByGenre(int id){
-        //TODO 3: need to handle return movies from networking service
-        networkingManager.getMovieByGenre(id,1);
-    }
+        genres = new ArrayList<Genre>() ;
 
-    public void getMoviesByGenre(int id,int genrePage){
-        //TODO 3: need to handle return movies from networking service
-        networkingManager.getMovieByGenre(id,genrePage);
+        genreRecyclerView = findViewById(R.id.genreList);
+        genreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        genresAdapter = new GenresAdapter(this, genres);
+        genreRecyclerView.setAdapter(genresAdapter);
+        networkingManager.getMovieGenres();
     }
 
     @Override
     public void dataListener(String jsonString) {
-        System.out.println(jsonString);
-        movies = jsonService.getMoviesFromJson(jsonString);
+        genres=jsonService.getGenresFromJson(jsonString);
+        genresAdapter = new GenresAdapter(this,genres);
+        genreRecyclerView.setAdapter(genresAdapter);
+        genresAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void genreClicked(Genre selectedGenre) {
+        Log.d("Genre", "genreClicked: clicked"+selectedGenre.getId());
+        Log.d("Genre", "genreClicked: clicked");
+        Intent intent = new Intent(this,MovieListByGenre.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("genreId",selectedGenre.getId());
+        intent.putExtra("bundle",bundle);
+        startActivity(intent);
     }
 }

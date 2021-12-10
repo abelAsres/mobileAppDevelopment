@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.map524.anothermovieapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".myApp"
         android:allowBackup="true"
@@ -11,6 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnotherMovieApp">
+        <activity
+            android:name=".SingleMovie"
+            android:exported="false" />
+        <activity
+            android:name=".MovieListByGenre"
+            android:exported="false" />
+        <activity
+            android:name=".Genres"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

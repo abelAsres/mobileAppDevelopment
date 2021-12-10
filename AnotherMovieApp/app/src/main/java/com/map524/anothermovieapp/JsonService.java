@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class JsonService {
 
     public ArrayList<Movie> getMoviesFromJson(String Json){
-
         ArrayList<Movie> movies = new ArrayList<Movie>();
         try {
             JSONObject json_movies = new JSONObject(Json);
@@ -20,12 +19,8 @@ public class JsonService {
 
             String title = json_movies_results.getJSONObject(3).getString("title");
 
-            Log.d("length of jsonmovies", "getMoviesFromJson: "+json_movies_results.length());
             for (int i = 0; i < json_movies_results.length();i++){
-                Log.d("length of jsonmovies", "i:"+i);
-                //title = json_movies_results.getJSONObject(i).getString("title");
-                String backdrop_path = json_movies_results.getJSONObject(i).getString("backdrop_path");
-
+               String backdrop_path = json_movies_results.getJSONObject(i).getString("backdrop_path");
 
                JSONArray genre_ids_obj = json_movies_results.getJSONObject(i).getJSONArray("genre_ids");
                 int [] genre_ids = new int [genre_ids_obj.length()];
@@ -51,5 +46,19 @@ public class JsonService {
             e.printStackTrace();
         }
         return movies;
+    }
+
+    public ArrayList<Genre> getGenresFromJson(String Json){
+        ArrayList<Genre> genres = new ArrayList<Genre>();
+        try {
+            JSONArray json_genres = new JSONObject(Json).getJSONArray("genres");
+            for (int i = 0; i < json_genres.length();i++){
+                Genre genre = new Genre(Integer.parseInt(json_genres.getJSONObject(i).getString("id")),json_genres.getJSONObject(i).getString("name"));
+                genres.add(genre);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return genres;
     }
 }

@@ -17,7 +17,8 @@ public class NetworkingService {
 
 
     private String apiKey = "&api_key=b6cc214404645f70e9a23fb883752578";
-    private String genreUrl = "https://api.themoviedb.org/3/discover/movie?with_genres=";
+    private String moviesByGenreUrl = "https://api.themoviedb.org/3/discover/movie?with_genres=";
+    private String genresUrl = "https://api.themoviedb.org/3/genre/movie/list?";
     public static ExecutorService networkExecutorService = Executors.newFixedThreadPool(4);
     public static Handler networkingHandler = new android.os.Handler(Looper.getMainLooper());
 
@@ -37,7 +38,7 @@ public class NetworkingService {
                 HttpsURLConnection httpsURLConnection = null;
                 try {
                     //make http call here
-                    String urlString = genreUrl + genreId +"&page="+genrePage+ apiKey;
+                    String urlString = moviesByGenreUrl + genreId +"&page="+genrePage+ apiKey;
                     URL urlObj = new URL(urlString);
                     httpsURLConnection = (HttpsURLConnection) urlObj.openConnection();
                     httpsURLConnection.setRequestMethod("GET");
@@ -75,6 +76,51 @@ public class NetworkingService {
         });
     }
 
+    public void getMovieGenres(){
+        //create new runnable object to run in the background
+        networkExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpsURLConnection httpsURLConnection = null;
+                try {
+                    //make http call here
+                    String urlString = genresUrl + apiKey;
+                    URL urlObj = new URL(urlString);
+                    httpsURLConnection = (HttpsURLConnection) urlObj.openConnection();
+                    httpsURLConnection.setRequestMethod("GET");
+                    httpsURLConnection.setRequestProperty("Content-Type","application/json");
+
+                    //create reader obj to read data from connection
+                    InputStream in = httpsURLConnection.getInputStream();
+                    InputStreamReader reader = new InputStreamReader(in);
+                    int inputStramData = 0;
+                    String jsonData ="";
+
+                    while((inputStramData = reader.read()) != -1) {
+                        char current = (char) inputStramData;
+                        jsonData += current;
+                    }
+                    final String data = jsonData;
+                    //when the data is complete
+                    //use handler to run code in main thread
+                    networkingHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            networkingListener.dataListener(data);
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }finally {
+                    httpsURLConnection.disconnect();
+                }
+
+            }
+        });
+    }
     //search movies by title
     public void searchByMovieByTitle(String movieTitle){
         // TODO 2: need to fetch and return movie to caller
