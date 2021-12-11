@@ -25,6 +25,7 @@ public class SingleMovie extends AppCompatActivity {
     MovieDatabase movieDatabase;
     MovieDataBaseClient movieDataBaseClient;
 
+    Boolean fromWatchlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class SingleMovie extends AppCompatActivity {
         Intent intentFromMovieListByGenre = getIntent();
         Bundle bundle = intentFromMovieListByGenre.getBundleExtra("bundle");
         movie = bundle.getParcelable("movie");
+        fromWatchlist = bundle.getBoolean("fromWatchlist");
         imageView = findViewById(R.id.movie_image);
         movieTitle = findViewById(R.id.movie_title);
         movieOverview = findViewById(R.id.movie_overview);
@@ -48,7 +50,11 @@ public class SingleMovie extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_save_movie,menu);
+        if(fromWatchlist == true){
+            inflater.inflate(R.menu.menu_movie_from_watchlist,menu);
+        }else {
+            inflater.inflate(R.menu.menu_save_movie,menu);
+        }
         return true;
     }
 
@@ -65,7 +71,11 @@ public class SingleMovie extends AppCompatActivity {
                 break;
             }
             case R.id.save_to_db:{
-                movieDataBaseClient.insertNewMovie(movie);
+                movieDataBaseClient.insertNewMovie(movie, movieTitle);
+                break;
+            }
+            case R.id.delete_from_db:{
+                movieDataBaseClient.deleteMovie(movie,movieTitle);
                 break;
             }
         }

@@ -61,6 +61,7 @@ public class Movie implements Parcelable {
     }
 
     protected Movie(Parcel in) {
+        id = in.readInt();
         backdrop_path = in.readString();
         //in.readIntArray(genre_ids);
         movie_id = in.readInt();
@@ -75,6 +76,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(backdrop_path);
         //dest.writeIntArray(genre_ids);
         dest.writeInt(movie_id);

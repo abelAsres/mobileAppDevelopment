@@ -3,6 +3,7 @@ package com.map524.anothermovieapp;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.room.Room;
@@ -38,12 +39,28 @@ public class MovieDataBaseClient {
     }
 
     //needs to run in background thread otherwise activity will lock
-    public void insertNewMovie(Movie movie){
+    public void insertNewMovie(Movie movie, TextView movieTitle){
         databaseExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 if (dbClient.getMovieDao().checkIfMovieInWatchList(movie.getMovieId()) == false){
                     dbClient.getMovieDao().insert(movie);
+                    Snackbar.make(movieTitle,movie.getOriginal_title()+" was added to the watch list", Snackbar.LENGTH_LONG).show();
+                }else{
+                    Snackbar.make(movieTitle,movie.getOriginal_title()+" is already on your watch list", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    //needs to run in background thread otherwise activity will lock
+    public void deleteMovie(Movie movie, TextView movieTitle){
+        databaseExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (dbClient.getMovieDao().checkIfMovieInWatchList(movie.getMovieId()) == true){
+                    dbClient.getMovieDao().delete(movie);
+                    Snackbar.make(movieTitle,movie.getOriginal_title()+" has been removed from watch list", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

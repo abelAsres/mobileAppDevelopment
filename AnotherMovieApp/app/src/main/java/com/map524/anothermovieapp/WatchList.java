@@ -46,6 +46,7 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
                 Intent intent = new Intent(view.getContext(),SingleMovie.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("movie",listFromDB.get(i));
+                bundle.putBoolean("fromWatchlist", true);
                 intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
@@ -74,13 +75,6 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
             }
         }
         return true;
-    }
-
-
-
-    private void startSearchByGenreActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
     }
 
 
