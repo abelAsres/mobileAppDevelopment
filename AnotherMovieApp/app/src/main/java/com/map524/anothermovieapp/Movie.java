@@ -31,6 +31,20 @@ public class Movie implements Parcelable {
 
     public String imageUrl ="https://image.tmdb.org/t/p/w500";
 
+    public Movie() {
+        this.movie_id = 0;
+        this.backdrop_path = "";
+        //this.genre_ids = [];
+        this.original_title = "";
+        this.overview = "";
+        this.poster_path = "";
+        this.release_date = "";
+        this.title = "";
+        this.vote_average = 0;
+        this.vote_count = 0;
+        this.imageUrl = "";
+    }
+
     public Movie(String backdrop_path, int[] genre_ids, int movie_id, String original_title,
                  String overview, String poster_path, String release_date, String title,
                  float vote_average, int vote_count) {

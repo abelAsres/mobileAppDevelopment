@@ -1,5 +1,6 @@
 package com.map524.anothermovieapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -132,6 +136,39 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
         Bundle bundle = new Bundle();
         bundle.putParcelable("movie",selectedMovie);
         intent.putExtra("bundle",bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_scrolling,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.search_by_genre: {
+                startGenreActivity();
+                break;
+            }
+            case R.id.saved_movies:{
+                startSaveMoviesActivity();
+                break;
+            }
+        }
+        return true;
+    }
+
+    private void startGenreActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void startSaveMoviesActivity(){
+        Intent intent = new Intent(this,WatchList.class);
         startActivity(intent);
     }
 }

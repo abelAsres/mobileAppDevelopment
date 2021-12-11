@@ -12,6 +12,9 @@ public interface MovieDao {
     @Insert
     void insert(Movie movie);
 
+    @Query("SELECT EXISTS(SELECT * FROM movie WHERE movie_id = :movieId)")
+    Boolean checkIfMovieInWatchList(int movieId);
+
     @Delete
     void delete(Movie movie);
 

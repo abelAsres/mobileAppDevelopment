@@ -3,38 +3,37 @@ package com.map524.anothermovieapp;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import androidx.room.Room;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MovieDataBaseClient {
-    MovieDatabase dbClient;
-    Context db_context;
+    static MovieDatabase dbClient;
 
     interface DatabaseActionListener{
         public void databaseReturnAllMoviesList(List<Movie> movieList);
     }
-    DatabaseActionListener databaseListener;
+    public DatabaseActionListener databaseListener;
 
 
     public static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(4);
     //gives access to main thread
     Handler handler = new Handler(Looper.getMainLooper());
 
-    MovieDataBaseClient (Context context){
-        db_context = context;
-        //instance of a database
+    private static void BuildDBInstance (Context context) {
         dbClient = Room.databaseBuilder(context,MovieDatabase.class,"database-movies").build();
     }
 
-    public MovieDatabase getDBClient(){
-        if(dbClient == null){
-            dbClient = new MovieDataBaseClient(db_context).dbClient;
+    public static MovieDatabase getDBInstance(Context context){
+        if (dbClient == null){
+            BuildDBInstance(context);
         }
-
         return dbClient;
     }
 
@@ -43,7 +42,9 @@ public class MovieDataBaseClient {
         databaseExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                dbClient.getMovieDao().insert(movie);
+                if (dbClient.getMovieDao().checkIfMovieInWatchList(movie.getMovieId()) == false){
+                    dbClient.getMovieDao().insert(movie);
+                }
             }
         });
     }

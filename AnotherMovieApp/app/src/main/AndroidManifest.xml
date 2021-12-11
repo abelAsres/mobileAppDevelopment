@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnotherMovieApp">
         <activity
+            android:name=".WatchList"
+            android:exported="false" />
+        <activity
             android:name=".SingleMovie"
             android:exported="false" />
         <activity
