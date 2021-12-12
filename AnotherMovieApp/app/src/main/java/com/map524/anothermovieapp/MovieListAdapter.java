@@ -42,8 +42,10 @@ public class MovieListAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.movie_item,null);
         TextView movie_realease_date = convertView.findViewById(R.id.release_date);
         TextView movie_title = convertView.findViewById(R.id.movie_title);
+        ImageView movie_image = convertView.findViewById(R.id.movie_image);
         movie_title.setText(listOfMovies.get(position).getOriginal_title());
         movie_realease_date.setText(listOfMovies.get(position).getRelease_date());
+        Glide.with(convertView).load(listOfMovies.get(position).getBackdrop_path()).into(movie_image);
         return convertView;
     }
 }
