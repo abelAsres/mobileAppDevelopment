@@ -19,15 +19,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieListByGenre extends AppCompatActivity implements NetworkingService.NetworkingListener,
-        MoviesAdapter.movieClickListener{
+        MoviesAdapter.movieClickListener,MovieDataBaseClient.DatabaseActionListener{
 
     RecyclerView movieRecyclerView;
     MoviesAdapter moviesAdapter;
 
     NetworkingService networkingManager;
     JsonService jsonService;
+    MovieDataBaseClient dbClient;
+    MovieDatabase movieDatabase;
     ArrayList<Movie> movies;
     int genreId;
 
@@ -38,6 +41,7 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
     Button prevBtn;
     Button nextBtn;
 
+    ArrayList<Movie> listFromDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,11 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
 
         networkingManager = ((myApp) getApplication()).getNetworkingService();
         jsonService = ((myApp) getApplication()).getJsonService();
+
+        movieDatabase = MovieDataBaseClient.getDBInstance(this);
+        dbClient = ((myApp) getApplication()).getMovieDataBaseClient();
+        dbClient.databaseListener = this;
+
         //listen for background thread to complete
         networkingManager.networkingListener= this;
 
@@ -68,6 +77,7 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
             genreId = bundleFromMain.getInt("genreId");
         }
         getMoviesByGenre(genreId);
+        dbClient.getAllMovies();
 
     }
 
@@ -134,6 +144,11 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
         Log.d("clicked", "movieClicked");
         Intent intent = new Intent(this,SingleMovie.class);
         Bundle bundle = new Bundle();
+        for (int i = 0; i < listFromDB.size();i++){
+            if(listFromDB.get(i).getMovieId() == selectedMovie.getMovieId()){
+                bundle.putBoolean("fromWatchlist",true);
+            }
+        }
         bundle.putParcelable("movie",selectedMovie);
         intent.putExtra("bundle",bundle);
         startActivity(intent);
@@ -163,12 +178,27 @@ public class MovieListByGenre extends AppCompatActivity implements NetworkingSer
     }
 
     private void startGenreActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GenreList.class);
         startActivity(intent);
     }
 
     private void startSaveMoviesActivity(){
         Intent intent = new Intent(this,WatchList.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void databaseReturnAllMoviesList(List<Movie> movieList) {
+        listFromDB = new ArrayList<>(movieList);
+    }
+
+    public void checkIfMovieOnWatchlist(Boolean onWatchlist) {
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 }

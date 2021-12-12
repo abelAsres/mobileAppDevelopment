@@ -11,16 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NetworkingService.NetworkingListener,
+public class GenreList extends AppCompatActivity implements NetworkingService.NetworkingListener,
         GenresAdapter.genreClickListener{
 
     NetworkingService networkingManager;
@@ -31,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements NetworkingService
     ArrayList<Genre> genres;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_genre_list);
 
         networkingManager = ((myApp) getApplication()).getNetworkingService();
         jsonService = ((myApp) getApplication()).getJsonService();

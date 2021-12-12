@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
-public class SingleMovie extends AppCompatActivity {
+import java.util.List;
+
+public class SingleMovie extends AppCompatActivity{
 
     Movie movie;
     TextView movieTitle;
     TextView movieOverview;
     ImageView imageView;
-
+    Switch switch_watchlist;
     MovieDatabase movieDatabase;
     MovieDataBaseClient movieDataBaseClient;
 
@@ -31,20 +35,43 @@ public class SingleMovie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_movie);
 
-
-        movieDatabase = MovieDataBaseClient.getDBInstance(this);
-        movieDataBaseClient = ((myApp)getApplication()).getMovieDataBaseClient();
-
         Intent intentFromMovieListByGenre = getIntent();
         Bundle bundle = intentFromMovieListByGenre.getBundleExtra("bundle");
         movie = bundle.getParcelable("movie");
-        fromWatchlist = bundle.getBoolean("fromWatchlist");
+
+        movieDatabase = MovieDataBaseClient.getDBInstance(this);
+        movieDataBaseClient = ((myApp)getApplication()).getMovieDataBaseClient();
+        //movieDataBaseClient.isMovieInDB(movie.getMovieId());
+
         imageView = findViewById(R.id.movie_image);
         movieTitle = findViewById(R.id.movie_title);
         movieOverview = findViewById(R.id.movie_overview);
+        switch_watchlist = findViewById(R.id.switch_watchlist);
+
+
         movieTitle.setText(movie.getOriginal_title());
         movieOverview.setText(movie.getOverview());
+        fromWatchlist = bundle.getBoolean("fromWatchlist");
         Glide.with(this).load("https://image.tmdb.org/t/p/w500"+movie.getPoster_path()).into(imageView);
+        switch_watchlist.setChecked(fromWatchlist);
+        if(switch_watchlist.isChecked()){
+            switch_watchlist.setText("Remove from Watchlist");
+        }else{
+            switch_watchlist.setText("Add to Watchlist");
+        }
+        switch_watchlist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked == true){
+                    movieDataBaseClient.insertNewMovie(movie, movieTitle);
+                    switch_watchlist.setText("Remove from Watchlist");
+                }else{
+                    movieDataBaseClient.deleteMovie(movie,movieTitle);
+                    switch_watchlist.setText("Add to Watchlist");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -83,7 +110,7 @@ public class SingleMovie extends AppCompatActivity {
     }
 
     private void startGenreActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GenreList.class);
         startActivity(intent);
     }
 

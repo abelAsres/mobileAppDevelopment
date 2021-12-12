@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SplashActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/genreList"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Powered By:"
+        app:layout_constraintBottom_toTopOf="@+id/power_by_tmdb"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintVertical_bias="0.33"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/power_by_tmdb"
+        android:src="@drawable/powered_by_tmdb"
+        android:layout_width="335dp"
+        android:layout_height="349dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

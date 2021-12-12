@@ -40,6 +40,7 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
         MovieListAdapter movieAdapter = new MovieListAdapter(listFromDB,this);
         listOfMovies.setAdapter(movieAdapter);
 
+
         listOfMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -52,6 +53,11 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
             }
         });
         //movieAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void checkIfMovieOnWatchlist(Boolean onWatchlist) {
+
     }
 
     @Override
@@ -79,7 +85,7 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
 
 
     private void startGenreActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GenreList.class);
         startActivity(intent);
     }
 
@@ -88,4 +94,9 @@ public class WatchList extends AppCompatActivity implements MovieDataBaseClient.
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbClient.getAllMovies();
+    }
 }

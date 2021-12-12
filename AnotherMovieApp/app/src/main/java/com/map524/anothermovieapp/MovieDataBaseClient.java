@@ -19,6 +19,7 @@ public class MovieDataBaseClient {
 
     interface DatabaseActionListener{
         public void databaseReturnAllMoviesList(List<Movie> movieList);
+        public void checkIfMovieOnWatchlist(Boolean onWatchlist);
     }
     public DatabaseActionListener databaseListener;
 
@@ -49,6 +50,21 @@ public class MovieDataBaseClient {
                 }else{
                     Snackbar.make(movieTitle,movie.getOriginal_title()+" is already on your watch list", Snackbar.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    public void isMovieInDB(int movieId){
+        databaseExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Boolean onWatchlist = dbClient.getMovieDao().checkIfMovieInWatchList(movieId);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        databaseListener.checkIfMovieOnWatchlist(onWatchlist);
+                    }
+                });
             }
         });
     }
