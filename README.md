@@ -7,3 +7,4 @@ This repo is a collection of android mobile applications that I developed for th
 1. Calculator App
 2. CashRegister App
 3. Quiz App
+4. Another Movie App
